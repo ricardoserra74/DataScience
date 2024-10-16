@@ -1,3 +1,4 @@
+# Creamos un tercer modelo con hiperparámetros
 # Creo un diccionario de métodos, que el modelo vaya combinando parámetros. Entrenamos con el dataset2, sin las variables innecesarias.
 grid_param = {
     'solver': ['lbfgs', 'newton_cg', 'sag', 'liblinear'],
