@@ -1,3 +1,4 @@
+# Creamos un modelo de regresión logística base, sin transformaciones, hiperparametrización etc
 # Borramos las variables aleatorias
 imput = imput.drop(['aleatorio', 'aleatorio2'], axis=True)
 
