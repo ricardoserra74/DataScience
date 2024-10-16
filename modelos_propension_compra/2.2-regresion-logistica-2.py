@@ -1,3 +1,4 @@
+# Creamos un segundo modelo eliminando las variables sin relación con la objetivo
 # Creamos datasets nuevos eliminando las variables no representativas
 data_train2 = data_train.drop(['Age','Gender', 'Income', 'SocialShares', 'CampaignChannel'], axis = 1)
 data_test2 = data_test.drop(['Age','Gender', 'Income', 'SocialShares', 'CampaignChannel'], axis = 1)
