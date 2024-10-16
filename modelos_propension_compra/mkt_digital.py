@@ -1,3 +1,4 @@
+"""
 ## DEFINICIÓN DEL PROYECTO <BR>
 Vamos a desarrollar un modelo que prediga si un usuario va a convertir o no, en función de unas variables de campaña y de usuario. <br>
 Para este proyecto, desarrollaremos 3 enfoques: <br>
@@ -8,13 +9,13 @@ Para este proyecto, desarrollaremos 3 enfoques: <br>
 
 La fase de análisis de los datos inicla será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
 ## 0- IMPORTACIÓN DE LIBRERÍAS Y FUNCIONES<br>
+"""
 
 ## LIBRERÍAS BÁSICAS
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-#from datetime import datetime
 import warnings
 warnings.filterwarnings("ignore")
 from datetime import datetime
@@ -182,6 +183,8 @@ def mostrar_matriz(y_test, pred_y):
 ## IMPORTAMOS LOS DATOS DE LAS VARIABLES Y LA OBJETIVO
 dataset = pd.read_csv('digital_marketing_campaign_dataset.csv', sep=",")
 dataset.describe()
+
+"""
 ## 1- ANÁLISIS DE VARIABLES: <br>
 En este apartado analizaremos: <br>
 1- Tipos de variables: tenemos 14 variables numéricas y 6 categóricas tipo object. <br>
@@ -191,6 +194,8 @@ En este apartado analizaremos: <br>
 5- Outliers:  <br>
 6- Missings o valores perdidos. <br>
 Adjuntamos en el ejercicio la salida de la librería ydata_profiling, que resumimos a continuación.
+"""
+
 dataset.info()
 # Utilizamos la librería ydata_profiling para hacer un análisis descriptivo de las variables
 profile = ydata_profiling.ProfileReport(dataset)
@@ -201,7 +206,7 @@ profile.to_file(output_file='Analisis_descriptivo.html')
 profile
 dataset.Conversion.value_counts(normalize=True)
 ## 1.1 Resumen de las variables: <br>
-
+"""
 Exploramos el dataset para comprender su composición: disponemos de 8000 obervaciones, sin valores faltantes ni duplicados.<br>
 - CustomerId: número identificativo del cliente, inicialmente lo dejamos (por si tenemos que mergear algún dataset), pero lo sacaremos de los modelos por no aportar información.<br>
 - Age: edad del cliente, numérica. Valores comprendidos entre 18 y 69, con una media de 43,6. Presenta concentración en los valores mínimo y máximo. <br>
@@ -223,8 +228,7 @@ Exploramos el dataset para comprender su composición: disponemos de 8000 oberva
 - PreviousPurchases: número de compras anteriores realizadas por el cliente. Valores entre 0 y 10, con promedio de 4,5. El dataset tiene un 10,5% de ceros. <br>
 - LoyaltyPoints: número de puntos de fidelización acumulados por el cliente. Valores entre 0 y 5000, con promedio de 2.490 <br>
 - Conversion: variable dicotómica, qie indica si el cliente compró (1) o no (0). Presenta un importante desbalanceo: el 87% de los registros sí compraron, frente al 12,7% que no efectuaron compra. Tenemos que aplicar técnicas de balanceo.
-
-
+"""
 
 
 ## 1.2 Transformaciones iniciales de variables <br>
@@ -241,11 +245,14 @@ dataset['CampaignType'] = dataset['CampaignType'].astype('category')
 dataset['Gender'] = dataset['Gender'].astype('category')
 
 dataset[dataset['WebsiteVisits'] > 0].head()
-dataset.loc[2214]
+
+"""
 ## 1.3 Análisis Gráfico de las variables
 ### 1.3.1- Distribución de variables numéricas <br>
 Volvemos a representar las variables para evaluarlas conjuntamente: <br>
 Confirmamos que las distribuciones son uniformes, confirmamos más peso de los 0 en el género, y confirmamos el desbalanceo de la variable respuesta.
+"""
+
 fig, axes = pyplot.subplots(nrows=5, ncols=4, figsize=(10, 8))
 axes = axes.flat
 columnas_numeric = dataset.select_dtypes(include=['float64', 'int64']).columns
@@ -259,6 +266,8 @@ for i, colum in enumerate(columnas_numeric):
 fig.tight_layout()
 pyplot.subplots_adjust(top = 0.9)
 fig.suptitle('Distribución de variables numéricas', fontsize = 10, fontweight = "bold");
+
+"""
 ### 1.3.2- Distribución de las variables numéricas frente a la variable objetivo <br>
 Teniendo en cuenta el desbalanceo de la variable objetivo, vemos las distribuciones de las variables numéricas respecto a la y<br>
 Normalizamos las gráficas para una mejor visualización, entendiendo el ya existente desbalanceo. Como resumen: <br>
@@ -274,6 +283,8 @@ Normalizamos las gráficas para una mejor visualización, entendiendo el ya exis
 * SocialShares: las densidades son parecidas entre compradores y no compradores, aunque los no compradores tienen un pico alrededor de los 50. <br>
 * EmailOpens: los compradores tienen mayores densidades de aperturas altas que los no compradores. <br>
 * EmailClicks, PreviousPurchases y LoyaltyPoints: lso compradores tienen densidades más altas en los valores más altos. <br>
+"""
+
 #  plot Numerical Data
 a = 4  # 4 filas
 b = 4  # 4 columnas
@@ -292,11 +303,13 @@ pyplot.tight_layout()
 pyplot.subplots_adjust(top = 0.9)
 fig.suptitle('Distribución de variables numéricas respecto a la y', fontsize = 20, fontweight = "bold");
 
+"""
 ###  1.3.3.- Distribución de variables categóricas: <br>
 * Gender: para el género "Male", los valores de la y están menos representados que para el género "Female". <br>
 * CampaignChannels: los valores se distribuyen de una manera más o menos homogénea, entre el 19% y el 21% de registros en cada categoría. <br>
 * CampaignType: también se distribuyen de una manera equilibrada, entre el 24% y el 26% de registros por categoría. <br>
 * En cuanto a cómo se distribuyen las categorías en función de la variable objetivo, la categoría de CampaignType = Conversion tiene infrarrepresentación para los valores de y=0 respecto al resto de categorías: 138/1.016 = 13.6%, frente al resto de categorías que están en torno al 28%. 
+"""
 
 columnas_cat = dataset[['Gender', 'CampaignChannel', 'CampaignType' ]]
 
@@ -324,27 +337,32 @@ imput = dataset.drop(['CustomerID', 'y'],axis=1)
 # No existen asimetrías en las variables numéricas, con lo que no tenemos problemas de valores atípicos.
 imput.select_dtypes(include=np.number).apply(lambda x: x.skew())
 ## 1.5 Existencia de valores perdidos: <br>
-Como hemos comprobado anteriormente con la librería ydata_profiling, no existen valores faltantes.
-#Proporción de missings por variable 
+# Como hemos comprobado anteriormente con la librería ydata_profiling, no existen valores faltantes.
+# Proporción de missings por variable 
 dataset.apply(lambda x: x.isna().sum()/dataset.shape[0]*100)
+
+"""
 ## 1.6 Imputaciones: <br>
 Existen 362 registros que tienen EmailOpens = 0 y EmailClicks distintos de cero, lo que es incongruente. Para corregir esos registros, recalculamos el campo EmailOpens ayudándonos de la columna ClickTroughRate, de manera que EmailOpens(0) = EmailClicks / ClickTroughRate. <br>
 Finalmente, nos quedamos con 41 registros que tienen EmailOpens = 0 y EmailClicks = 0 <br>
+"""
 
-Al aplicar dicha transformación, el número de valores posibles del campo EmailOpens ha aumentado, y se han generado valores extremos. Para corregir estos outliers, les asignamos el mayor valor de la serie, que es 19.
-# Consultamos
-dataset.loc[(dataset['EmailOpens'] == 0) & (dataset['EmailClicks'] != 0)].count()
 
+# Al aplicar dicha transformación, el número de valores posibles del campo EmailOpens ha aumentado, y se han generado valores extremos. Para corregir estos outliers, les asignamos el mayor valor de la serie, que es 19.
 # Consultamos
 dataset.loc[(dataset['EmailOpens'] == 0) & (dataset['EmailClicks'] == 0)].count()
+
 # Aplicamos la fórmula de imputación de los valores incongruentes para EmailOpens=0
 dataset.loc[dataset['EmailOpens'] == 0, 'EmailOpens'] = round((dataset.EmailClicks / dataset.ClickThroughRate), 0)
 dataset.describe()
 ax = sns.boxplot(x="EmailOpens", data=dataset)
+
 # Para corregir esos registros, les asignamos el valor máximo de la variable EmailOpens antes de realizar la transformación: 19
 dataset['EmailOpens'].loc[(dataset["EmailOpens"] > 19)] = 19
 
 ax = sns.boxplot(x="EmailOpens", data=dataset)
+
+"""
 ## 1.7- Análisis inicial de las relaciones de las variables con la objetivo: V de Cramer<br>
 La V de Cramer mide la asociación entre dos variables nominales, y su valor está entre 0 y 1 (existiendo poca asociación entre las variables para valores cercanos a cero, y alta asociación para valores cercanos a 1). No obstante, para las variables numéricas, las tramificamos en 5 tramos, para que sean tratadas como categóricas.<br>
 
@@ -353,6 +371,8 @@ Las variables que menos relación tienen, son "Age", "Income", "Campaignchannel"
 "Social Shares" y "Gender" están por debajo de las variables aleatorias, con lo que vamos a prescindir de ellas. <br>
 
 Ejecutamos también las correlaciones entre las variables numéricas y la variable objetivo: aunque varían los valores, el resultado confirma la variables obtenidas con la V de Cramer.
+"""
+
 dataset.info()
 # Aplicamos la función  V DE CREAMER al input completo contra la objetivo
 tablaCramer = pd.DataFrame(imput.apply(lambda x: cramers_v(x,varObj)),columns=['VCramer'])
@@ -367,10 +387,14 @@ corr.style.background_gradient(cmap='YlOrRd').format(precision=3)
 dataset.info()
 # Borramos las variables aleatorias
 dataset = dataset.drop(['aleatorio', 'aleatorio2'], axis=True)
+
+"""
 # 2- TRANSFORMACIONES DE VARIABLES 
 ## 2.1 Transformaciones en las variables numéricas: <br> 
 - Ejecutamos la función precargada que nos busca la mejor transformación de las variables numéricas, para maximizar las relaciones con la variable objetivo. Mediante el gráfico de barras, vemos que no cambian significativamente las distribuciones de las variables aplicando transformaciones matemáticas, con lo que no las transformaremos.
 # Aplicar a las variables continuas la mejor transformación según cramer frente a varObjBin
+"""
+
 transf_cramer = imput.select_dtypes(include=np.number).apply(lambda x: mejorTransf(x,varObj, tipo='cramer'))
 transf_cramer_names = imput.select_dtypes(include=np.number).apply(lambda x: mejorTransf(x,varObj,tipo='cramer', name=True))
 transf_cramer.columns = transf_cramer_names.values
@@ -383,14 +407,20 @@ tablaCramer = pd.DataFrame(imput_transf.apply(lambda x: cramers_v(x,varObj)),col
 
 # Obtener el gráfico de importancia de las variables frente a la objetivo continua según vcramer
 px.bar(tablaCramer,x=tablaCramer.VCramer,title='Relaciones frente a Compra tras efectuar Transformaciones en las variables', text_auto=True).update_yaxes(categoryorder="total ascending", automargin="left").show()
+
+"""
 # 3- ENFOQUE ESTADÍSTICO: MODELIZACIÓN DE UNA REGRESIÓN LOGÍSTICA <br>
 Antes de empezar con la partición del dataset en entrenamiento y test, recordamos que la variable objetivo presenta un importante desbalance en favor del valor 1. Esto es muiy importante, ya que el modelo tendrá problemas en detectar los valores 0.
+"""
+
 dataset.y.value_counts(normalize=True)
 
+"""
 ## 3.1- Partición en training y test: <br>
 El dataset de entrenamiento tiene 6400 registros, tanto para las x como para las y. <br>
 El dataset de test tiene 1600 registros. <br>
 La proporción de los valores de la variable objetivo en Training y en Test se ha mantenido casi al 100%. <br>
+"""
 
 # Borramos las variables aleatorias
 imput = imput.drop(['aleatorio', 'aleatorio2'], axis=True)
@@ -418,6 +448,9 @@ y_tr, X_tr = patsy.dmatrices(formC, data_train, return_type='dataframe')
 # Generamos las matrices de diseño según la fórmula de modelo completo para test
 y_tst, X_tst = patsy.dmatrices(formC, data_test, return_type='dataframe')
 X_tst.head()
+
+
+"""
 ## 3.3- Métricas de evaluación del modelo: <br>
 Tras ejecutar el modelo en training, hacemos las predicciones en test y obtenemos las métricas que nos van a ayudar en la elección de nuestro modelo: 
 * PseudoR: 0.1988, sería equiparable a un un 40% en una regresión lineal. El modelo explica el 40% de la variabilidad de la y.
@@ -446,6 +479,8 @@ Como resumen: nos encontramos con un modelo que tiene:
 * Para las "Conversiones": alta precisión y alto recall: el modelo maneja muy bien la clase=1
 # Definición de modelo: hay muchos solver, python usa por defecto éste. Aplicamos el solver newton-cg porque es el que nos da valores más altos de las métricas
 modelo1 = LogisticRegression(solver='newton-cg', max_iter=1000, penalty=None)
+"""
+
 
 # Arreglar y para que le guste a sklearn...numeric, creo un data set nuevo
 y_tr_ = y_tr.y.ravel()
@@ -468,9 +503,12 @@ curva_roc(y_tst, y_pred, modelLog, X_tst)
 
 print('Training set score: {:.4f}'.format(modelLog.score(X_tr, y_tr_)))
 print('Test set score: {:.4f}'.format(modelLog.score(X_tst, y_tst)))
+
 # Ajusto regresión de ejemplo para sacar los coeficientes. Lo hacemos una única vez con este modelo sólo, por no saturar
 modelLogCompleto = logit(formC,data=data_train).fit()
 modelLogCompleto.summary()
+
+"""
 ## 3.4- Proceso de backward para retirar variables del modelo y mejorarlo: MODELO 2
 Eliminamos las variables que no tiene un p-valor significativo, y volvemos a ejecutar el modelo en training, hacemos las predicciones en test y obtenemos las métricas que nos van a ayudar en la elección de nuestro modelo: La variable CampaignChannel es la que provoca esta mínima disminución.
 * PseudoR: 0.1964, sería equiparable a un un 39% en una regresión lineal. El modelo explica el 39% de la variabilidad de la y, inferior al modelo anterior.
@@ -487,6 +525,7 @@ Eliminamos las variables que no tiene un p-valor significativo, y volvemos a eje
 
 * Área bajo la curva roc: 1> 0.81> 0.5 --> modelo relativamente bueno. Es mejor que el "no modelo" y muy levemente que el modelo anterior.
 * No obstante, seguimos con una capacidad de predicción de los ceros muy baja. Haremos oversampling con este modelo.
+"""
 
 
 # Creamos datasets nuevos eliminando las variables no representativas
@@ -525,8 +564,9 @@ curva_roc(y_tst2, y_pred2, modelLog2, X_tst2)
 
 print('Training set score: {:.4f}'.format(modelLog2.score(X_tr2, y_tr_2)))
 print('Test set score: {:.4f}'.format(modelLog2.score(X_tst2, y_tst2)))
-## 3.5 Proceso con hiperparámetros: MODELO 3
 
+"""
+## 3.5 Proceso con hiperparámetros: MODELO 3
 Empleamos la librería GridSearchCV para que nos combine parámetros para solver, penalización y peso de las clases:
 * La exactitud (accuracy) del modelo para clasificar correctamente es de un 85%: disminuye respecto a modelos anteriores.
 * La matriz de confusión nos da: 30 verdaderos 0, 1326 verdaderos 1, 159 falsos 1, 85 falsos 0
@@ -541,6 +581,7 @@ Empleamos la librería GridSearchCV para que nos combine parámetros para solver
 
 * Área bajo la curva roc: 1> 0.62> 0.5 --> modelo malo, se aproxima al no modelo.
 * No obstante, seguimos con una capacidad de predicción de los ceros baja.
+"""
 
 # Creo un diccionario de métodos, que el modelo vaya combinando parámetros. Entrenamos con el dataset2, sin las variables innecesarias.
 
@@ -580,6 +621,8 @@ curva_roc(y_tst2, y_pred_hiper, modelLoghiper, X_tst2)
 
 print('Training set score: {:.4f}'.format(modelLoghiper.score(X_tr2, y_tr_2)))
 print('Test set score: {:.4f}'.format(modelLoghiper.score(X_tst2, y_tst2)))
+
+"""
 ## 3.6- Balanceo del conjunto de datos: SAMPLIG CON SMOTE TOMEK: MODELO 4
 Probamos a incluir sobremuestreo y submuestreo con la librería SMOTE para oversampling, y TOMEK para undersampling, para que balancee la muestra.
 * La exactitud (accuracy) del modelo para clasificar correctamente es de un 73%: disminuye 17 puntos respecto a modelos anteriores.
@@ -595,6 +638,9 @@ Probamos a incluir sobremuestreo y submuestreo con la librería SMOTE para overs
 
 * Área bajo la curva roc: 1> 0.81> 0.5 --> modelo relativamente bueno. Es mejor que el "no modelo" y muy levemente que el modelo anterior.
 * Ninguna de las estrategias ha mejorado ostensiblemente la explicación del modelo.
+"""
+
+
 os_us = SMOTETomek(sampling_strategy='auto')
 X_train_tomek, y_train_tomek = os_us.fit_resample(X_tr2, y_tr_2)
 
@@ -622,9 +668,13 @@ dataset.info()
 
 print('Training set score: {:.4f}'.format(modelLogtomek.score(X_train_tomek, y_train_tomek)))
 print('Test set score: {:.4f}'.format(modelLogtomek.score(X_tst2, y_tst2)))
-# 4- ENFOQUE 2: MACHINEL LEARNING: ME QUEDO AQUÍ: TIRAR PYCARET YA
+
+"""
+# 4- ENFOQUE 2: MACHINEL LEARNING: ME QUEDO AQUÍ:
 ## 4.1- Selección inicial de modelos
 # Creamos un dataset dummy, donde hayamos transformado las variables categóricas, para poder trabajar con él cuando vayamos a tunear hiperparámetros desde fuera de Pycaret (Pycaret hace transformación de variables)
+"""
+
 dataset_dum = dataset.drop(['CustomerID'], axis=1)
 
 dataset_dum.Gender.replace(('Male','Female'),
@@ -681,6 +731,8 @@ models()
 best_models = compare_models()
 # Devuelve el mejor modelo
 model_setup.automl()
+
+
 ## 4.2- Creamos el modelo LGBMC
 # Creamos el modelo de LIGHTGBM
 model_lightgbm = create_model('lightgbm')
@@ -694,6 +746,8 @@ evaluate_model(model_lightgbm)
 
 print('Training set score: {:.4f}'.format(model_lightgbm.score(X_train_dum, y_train_dum)))
 print('Test set score: {:.4f}'.format(model_lightgbm.score(X_test_dum, y_test_dum)))
+
+
 ## 4.3- Creamos modelo lightgbm tuneado
 # Le incremento los estimadores y aplico balanceo
 import lightgbm as lgb
@@ -714,6 +768,7 @@ curva_roc(y_test_dum, y_pred_lgbm_dum, model_lgbm_dum, X_test_dum)
 
 print('Training set score: {:.4f}'.format(model_lgbm_dum.score(X_train_dum, y_train_dum)))
 print('Test set score: {:.4f}'.format(model_lgbm_dum.score(X_test_dum, y_test_dum)))
+
 ## 4.4- Modelo GBC
 # Creamos el modelo de GBC
 model_gbc = create_model('gbc')
@@ -729,6 +784,8 @@ evaluate_model(model_gbc)
 print('Training set score: {:.4f}'.format(model_gbc.score(X_train_dum, y_train_dum)))
 print('Test set score: {:.4f}'.format(model_gbc.score(X_test_dum, y_test_dum)))
 # dashboard(model_gbc)
+
+
 ## 4.5- Tuneamos hiperparámetros de GBC
 from sklearn.ensemble import GradientBoostingClassifier
 gbc = GradientBoostingClassifier(ccp_alpha=0.0, criterion='friedman_mse', init=None,
@@ -751,6 +808,8 @@ curva_roc(y_test_dum, y_pred_gbc_dum, model_gbc_dum, X_test_dum)
 
 print('Training set score: {:.4f}'.format(model_gbc_dum.score(X_train_dum, y_train_dum)))
 print('Test set score: {:.4f}'.format(model_gbc_dum.score(X_test_dum, y_test_dum)))
+
+
 ## 4.6- Modelo XGBOOST
 # Creamos el modelo de GBC
 model_xgboost = create_model('xgboost')
@@ -767,6 +826,7 @@ evaluate_model(model_xgboost)
 print('Training set score: {:.4f}'.format(model_xgboost.score(X_train_dum, y_train_dum)))
 print('Test set score: {:.4f}'.format(model_xgboost.score(X_test_dum, y_test_dum)))
 # dashboard(model_xgboost)
+
 
 ## 4.7- Modelo XGBOOST AJUSTADO
 # Añadimos max_Depth=60 y estimadores
@@ -792,6 +852,8 @@ curva_roc(y_test_dum, y_pred_xgbc_dum, model_xgbc_dum, X_test_dum)
 
 print('Training set score: {:.4f}'.format(model_xgbc_dum.score(X_train_dum, y_train_dum)))
 print('Test set score: {:.4f}'.format(model_xgbc_dum.score(X_test_dum, y_test_dum)))
+
+"""
 # 5. ENFOQUE DEEP LEARNING
 En este punto derivamos al notebook en Google Collab
 # 6. EXPLICACIÓN DE UNA PREDICCIÓN <br>
@@ -808,6 +870,8 @@ y, ¿Qué ha tenido en cuenta para NO incluir el registro en la clase de functio
 - Que han pasado 1016 días en que se registró la bomba. <br>
 - Que la longitud sea 220.77. <br>
 - que el fundador es aquél con una frecuencia 110. <br>
+"""
+
 
 # Usamos la librería Lime para explicar los resultados
 explainer = lime.lime_tabular.LimeTabularExplainer(X_train_dum.values, mode='classification',training_labels=y_train_dum,feature_names=X_train_dum.columns)
@@ -817,9 +881,12 @@ exp = explainer.explain_instance(X_train_dum.iloc[123], model_lightgbm.predict_p
 exp.show_in_notebook(show_all=True)
 exp.as_pyplot_figure()
 html = exp.as_html()
+
 # Guardar el HTML en un archivo
 with open("lime_explanation.html", "w") as file:
     file.write(html)
+
+
 # 7. PREDICCIONES Y EXPORTACIÓN DEL MODELO
 # Guardamos el modelo para poder llamarlo después sin tener que re-entrenarlo
 pkl_filename = "model_lightgbm.pkl"
