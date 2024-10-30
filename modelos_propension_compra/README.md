@@ -8,7 +8,7 @@ Para este proyecto, desarrollaremos 3 enfoques: <br>
 
 La fase de análisis de los datos inicial será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
 
-### Algunas gráficas de la fase de análisis ###
+### Algunas gráficas de la fase de análisis: ###
 ---
 ![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) <br>
 ---
@@ -17,6 +17,14 @@ La fase de análisis de los datos inicial será común para los tres enfoques, y
 ![ Relaciones de las variables con la variable y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis3.png) <br>
 ---
 
-### Listado de Modelos ordenados por la métrica "Accuracy" ###
+### Listado de Modelos ordenados por la métrica "Accuracy": ###
 ---
 ![ Distintos modelos](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models1.png) <br>
+
+### Modelo elegido: ###
+---
+![ Modelo LGBM Classifier](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models2.png) <br>
+
+### Métricas de evaluación del modelo elegido: ###
+---
+![ Curva ROC](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models3.png) <br>
