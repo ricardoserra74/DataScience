@@ -12,24 +12,24 @@ El modelo se puede ejecutar y probar aquí -->> https://huggingface.co/spaces/Ri
 
 ### Algunas gráficas de la fase de análisis: ###
 ---
-![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) <br>
+![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) <br><br>
 ---
-![ Distribución de variables numéricas respecto a la y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis2.png) <br>
+![ Distribución de variables numéricas respecto a la y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis2.png) <br><br>
 ---
-![ Relaciones de las variables con la variable y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis3.png) <br>
+![ Relaciones de las variables con la variable y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis3.png) <br><br>
 ---
 
 ### Listado de Modelos ordenados por la métrica "Accuracy": ###
 ---
-![ Distintos modelos](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models1.png) <br>
+![ Distintos modelos](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models1.png) <br><br>
 
 ### Modelo elegido: ###
 ---
-![ Modelo LGBM Classifier](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models2.png) <br>
+![ Modelo LGBM Classifier](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models2.png) <br><br>
 
 ### Métricas de evaluación del modelo elegido: ###
 ---
-![ Curva ROC](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models3.png) <br>
+![ Curva ROC](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models3.png) <br><br>
 
 ### Explicación de una predicción: ###
 ---
