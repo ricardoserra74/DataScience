@@ -10,7 +10,7 @@ La fase de análisis de los datos inicial será común para los tres enfoques, y
 
 El modelo se puede ejecutar y probar aquí -->> https://huggingface.co/spaces/Ricardoserra/model-lightgbm-conversion-digital-mkt <br><br>
 
-### Algunas gráficas de la fase de análisis: ###
+### 1- Algunas gráficas de la fase de análisis: ###
 ---
 ![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) <br><br>
 ---
@@ -19,18 +19,18 @@ El modelo se puede ejecutar y probar aquí -->> https://huggingface.co/spaces/Ri
 ![ Relaciones de las variables con la variable y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis3.png) <br><br>
 ---
 
-### Listado de Modelos ordenados por la métrica "Accuracy": ###
+### 2- Listado de Modelos ordenados por la métrica "Accuracy": ###
 ---
 ![ Distintos modelos](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models1.png) <br><br>
 
-### Modelo elegido: ###
+### 3- Modelo elegido: ###
 ---
 ![ Modelo LGBM Classifier](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models2.png) <br><br>
 
-### Métricas de evaluación del modelo elegido: ###
+### 4- Métricas de evaluación del modelo elegido: ###
 ---
 ![ Curva ROC](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models3.png) <br><br>
 
-### Explicación de una predicción: ###
+### 5- Explicación de una predicción: ###
 ---
 ![ Explicación de una predicción](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models4.png) <br>
