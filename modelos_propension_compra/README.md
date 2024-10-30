@@ -8,6 +8,8 @@ Para este proyecto, desarrollaremos 3 enfoques: <br>
 
 La fase de análisis de los datos inicial será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
 
+El modelo se puede ejecutar y probar aquí -->> https://huggingface.co/spaces/Ricardoserra/model-lightgbm-conversion-digital-mkt <br><br>
+
 ### Algunas gráficas de la fase de análisis: ###
 ---
 ![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) <br>
