@@ -13,3 +13,6 @@ La fase de análisis de los datos inicial será común para los tres enfoques, y
 ![ Distribución de variables numéricas respecto a la y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis2.png) <br>
 ![ Relaciones de las variables con la variable y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis3.png) <br>
 
+### Listado de Modelos ordenados por la métrica "Accuracy" ###
+
+![ Distintos modelos](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models1.png) <br>
