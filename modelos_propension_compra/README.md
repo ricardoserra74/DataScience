@@ -9,5 +9,7 @@ Para este proyecto, desarrollaremos 3 enfoques: <br>
 La fase de análisis de los datos inicial será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
 
 ### Algunas gráficas de la fase de análisis ###
-![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) 
+![ Distribución de variables numéricas](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis1.png) <br>
+![ Distribución de variables numéricas respecto a la y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis2.png) <br>
+![ Relaciones de las variables con la variable y](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/analisis3.png) <br>
 
