@@ -28,3 +28,7 @@ La fase de análisis de los datos inicial será común para los tres enfoques, y
 ### Métricas de evaluación del modelo elegido: ###
 ---
 ![ Curva ROC](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models3.png) <br>
+
+### Explicación de una predicción: ###
+---
+![ Explicación de una predicción](https://github.com/ricardoserra74/DataScience/blob/main/modelos_propension_compra/img/models4.png) <br>
