@@ -9,4 +9,5 @@ Para este proyecto, desarrollaremos 3 enfoques: <br>
 La fase de análisis de los datos inicial será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
 
 ### Algunas gráficas de la fase de análisis ###
-!analisis1
+!Análisis 1
+
