@@ -8,5 +8,7 @@ Para este proyecto, desarrollaremos 3 enfoques: <br>
 3- Enfoque de deep learning: emplearemos una red neuronal para obtener el modelo. <br>
 4- Compararemos finalmente los 3 resultados. <br>
 
-La fase de análisis de los datos inicla será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
+La fase de análisis de los datos inicial será común para los tres enfoques, y posteriormente se crearán datasets específicos que cumplan los requisitos de cada enfoque. <br>
 Para ejecutar el programa, hay que lanzar los archivos desde el cero hasta el final, son consecutivos. Los he troceado para facilitar la explicación.
+
+
